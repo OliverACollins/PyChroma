@@ -1,0 +1,31 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "PyChroma"
+version = "1.0.0"
+authors = [
+    {name = "Oliver A Collins", email = "oliver7collins@outlook.com"}
+]
+description = "A Python package enabling users to transform existing images into dot-based chromostereopsis output"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/OliverACollins/PyChroma"
+Issues = "https://github.com/OliverACollins/PyChroma/issues"
+
+[project.scripts]
+PyChroma = "scripts.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/scripts"]
