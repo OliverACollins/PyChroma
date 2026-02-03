@@ -50,7 +50,9 @@ PyChroma red-blue
 ```
 
 ```python
-from scripts.red_blue import generate
+from importlib.resources import files
+from PIL import Image
+from src.scripts.red_blue import generate
 
 red_dots = dict(
     radius=1.8,
@@ -68,8 +70,18 @@ blue_dots = dict(
     shape="square",
 )
 
+# DEFAULT INPUT
+img = Image.open(
+    files("src.scripts.default_input") / "redblue.png"
+).convert("RGB")
+
+# USE THIS CODE INSTEAD FOR CUSTOM INPUT
+#img = Image.open(
+#    r"[FILEPATH]"
+#).convert("RGB")
+
 generate(
-    input_path="src/media/redblue.png",
+    img=img,
     output_path="chromostereopsis.png",
     red_dots=red_dots,
     blue_dots=blue_dots,
@@ -92,7 +104,9 @@ PyChroma red-green
 ```
 
 ```python
-from scripts.red_green import generate
+from importlib.resources import files
+from PIL import Image
+from src.scripts.red_green import generate
 
 red_dots = dict(
     radius=1.8,
@@ -110,8 +124,18 @@ green_dots = dict(
     shape="square",
 )
 
+# DEFAULT INPUT
+img = Image.open(
+    files("src.scripts.default_input") / "redgreen.png"
+).convert("RGB")
+
+# USE THIS CODE INSTEAD FOR CUSTOM INPUT
+#img = Image.open(
+#    r"[FILEPATH]"
+#).convert("RGB")
+
 generate(
-    input_path="src/media/redgreen.png",
+    img=img,
     output_path="chromostereopsis.png",
     red_dots=red_dots,
     green_dots=green_dots,
@@ -134,7 +158,9 @@ PyChroma red-grey
 ```
 
 ```python
-from scripts.red_grey import generate
+from importlib.resources import files
+from PIL import Image
+from src.scripts.red_grey import generate
 
 red_dots = dict(
     radius=1.8,
@@ -152,8 +178,18 @@ grey_dots = dict(
     shape="square",
 )
 
+# DEFAULT INPUT
+img = Image.open(
+    files("src.scripts.default_input") / "redgrey.png"
+).convert("RGB")
+
+# USE THIS CODE INSTEAD FOR CUSTOM INPUT
+#img = Image.open(
+#    r"[FILEPATH]"
+#).convert("RGB")
+
 generate(
-    input_path="src/media/redgrey.png",
+    img=img,
     output_path="chromostereopsis.png",
     red_dots=red_dots,
     grey_dots=grey_dots,

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "PyChroma"
-version = "1.0.0"
+version = "1.0.1"
 authors = [
     {name = "Oliver A Collins", email = "oliver7collins@outlook.com"}
 ]
@@ -25,7 +25,10 @@ Homepage = "https://github.com/OliverACollins/PyChroma"
 Issues = "https://github.com/OliverACollins/PyChroma/issues"
 
 [project.scripts]
-PyChroma = "scripts.cli:main"
+pychroma = "src.scripts.cli:main"
+
+[tool.hatch.build]
+include = ["src/scripts/default_input/*.png"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/scripts"]
+packages = ["src"]

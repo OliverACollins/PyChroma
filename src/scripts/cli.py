@@ -1,7 +1,13 @@
 import argparse
 from importlib.resources import files
+from PIL import Image
+
 from . import red_blue, red_green, red_grey
 
+
+# --------------------------------------------------
+# Default input images
+# --------------------------------------------------
 
 DEFAULT_INPUTS = {
     "red-blue": "redblue.png",
@@ -9,6 +15,20 @@ DEFAULT_INPUTS = {
     "red-grey": "redgrey.png",
 }
 
+
+def load_default_image(mode):
+    """
+    Load a packaged default input image from
+    src/scripts/default_input using importlib.resources.
+    """
+    return Image.open(
+        files("src.scripts.default_input") / DEFAULT_INPUTS[mode]
+    ).convert("RGB")
+
+
+# --------------------------------------------------
+# Argument helpers
+# --------------------------------------------------
 
 def add_red_args(parser):
     parser.add_argument("--red_radius", type=float, metavar="", default=1.8, help="Adjust the radius of the red dots")
@@ -42,6 +62,10 @@ def add_grey_args(parser):
     parser.add_argument("--grey_shape", choices=["circle", "square"], default="square", help="Change the shape of the grey dots")
 
 
+# --------------------------------------------------
+# CLI entry point
+# --------------------------------------------------
+
 def main():
     parser = argparse.ArgumentParser(
         description="Chromostereopsis stimulus generator",
@@ -54,58 +78,44 @@ def main():
     action="help",
     help="Help for CLI"
 )
-
-    subparsers = parser.add_subparsers(
-        dest="mode",
-        required=True,
-    )
-
-
-    # Red-blue
-    rb = subparsers.add_parser(
-        "red-blue",
-        help="RED-BLUE chromostereopsis",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
-    rb.add_argument("--input", metavar="PATH", default="src/media/redblue.png", help="State the path of the chosen input image")
-    rb.add_argument("--save", metavar="PATH", default="red-blue.png", help="State the save name/path of the output image")
     
+    subparsers = parser.add_subparsers(dest="mode", required=True)
+
+    # ---------------- RED-BLUE ----------------
+    rb = subparsers.add_parser("red-blue", help="RED-BLUE chromostereopsis")
+    rb.add_argument("--input", metavar="PATH", default=None, help="State the path of the chosen input image")
+    rb.add_argument("--save", metavar="PATH", default="red-blue.png", help="State the save name/path of the output image")
     add_red_args(rb)
     add_blue_args(rb)
 
-
-    # Red-green
-    rg = subparsers.add_parser(
-        "red-green",
-        help="RED-GREEN chromostereopsis",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
-    rg.add_argument("--input", metavar="PATH", default="src/media/redgreen.png", help="State the path of the chosen input image")
+    # ---------------- RED-GREEN ----------------
+    rg = subparsers.add_parser("red-green", help="RED-GREEN chromostereopsis")
+    rg.add_argument("--input", metavar="PATH", default=None, help="State the path of the chosen input image")
     rg.add_argument("--save", metavar="PATH", default="red-green.png", help="State the save name/path of the output image")
-
     add_red_args(rg)
     add_green_args(rg)
 
-
-    # Red-grey
-    rgr = subparsers.add_parser(
-        "red-grey",
-        help="RED-GREY chromostereopsis",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
-    rgr.add_argument("--input", metavar="PATH", default="src/media/redgrey.png", help="State the path of the chosen input image")
+    # ---------------- RED-GREY ----------------
+    rgr = subparsers.add_parser("red-grey", help="RED-GREY chromostereopsis")
+    rgr.add_argument("--input", metavar="PATH", default=None, help="State the path of the chosen input image")
     rgr.add_argument("--save", metavar="PATH", default="red-grey.png", help="State the save name/path of the output image")
-    
     add_red_args(rgr)
     add_grey_args(rgr)
 
     args = parser.parse_args()
 
-    input_path = (
-        args.input
-        if args.input
-        else files("scripts.default_input") / DEFAULT_INPUTS[args.mode]
-    )
+    # --------------------------------------------------
+    # Resolve input image (user-provided OR default)
+    # --------------------------------------------------
+
+    if args.input:
+        img = Image.open(args.input).convert("RGB")
+    else:
+        img = load_default_image(args.mode)
+
+    # --------------------------------------------------
+    # Shared dot configuration
+    # --------------------------------------------------
 
     red_dots = dict(
         radius=args.red_radius,
@@ -114,6 +124,10 @@ def main():
         ratio=args.red_ratio,
         shape=args.red_shape,
     )
+
+    # --------------------------------------------------
+    # Dispatch to rendering scripts
+    # --------------------------------------------------
 
     if args.mode == "red-blue":
         blue_dots = dict(
@@ -125,7 +139,7 @@ def main():
         )
 
         red_blue.generate(
-            input_path=input_path,
+            img=img,
             output_path=args.save,
             red_dots=red_dots,
             blue_dots=blue_dots,
@@ -141,7 +155,7 @@ def main():
         )
 
         red_green.generate(
-            input_path=input_path,
+            img=img,
             output_path=args.save,
             red_dots=red_dots,
             green_dots=green_dots,
@@ -157,7 +171,7 @@ def main():
         )
 
         red_grey.generate(
-            input_path=input_path,
+            img=img,
             output_path=args.save,
             red_dots=red_dots,
             grey_dots=grey_dots,

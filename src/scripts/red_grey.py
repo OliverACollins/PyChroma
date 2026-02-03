@@ -5,7 +5,7 @@ from scipy.ndimage import distance_transform_edt
 
 
 def generate(
-    input_path,
+    img,
     output_path,
     red_dots,
     grey_dots,
@@ -17,7 +17,6 @@ def generate(
     # -------------------------
     # Load image
     # -------------------------
-    img = Image.open(input_path).convert("RGB")
     arr = np.array(img)
     h, w, _ = arr.shape
 
