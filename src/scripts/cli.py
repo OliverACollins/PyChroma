@@ -236,8 +236,8 @@ def main():
         flexible.generate(
             img=img,
             output_path=args.save,
-            colour1_hex=args.colour1,
-            colour2_hex=args.colour2,
+            colour1=args.colour1,
+            colour2=args.colour2,
             dots1=dots1,
             dots2=dots2,
             tolerance=args.tolerance,
