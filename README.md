@@ -202,7 +202,7 @@ generate(
  <img src = "src/media/flexible_example.png" alt = "Flexiblechromostereopsis"/>
 </figure>
 
-This function, through specifying HEX codes, enables you to choose two colours to replace with the dot-based pattern.
+This function, through specifying HEX codes, enables you to choose two colours to replace with the dot-based pattern. Considering that the specified colours in the functions above differ in their relative luminance values, this function would allow users, for example, to create an isoluminant chromostereopsis illusion upon selecting the appropriate HEX colours.
 
 ```powershell
 PyChroma flexible
