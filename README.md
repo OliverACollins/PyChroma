@@ -21,6 +21,12 @@ This package has been designed to receive input from an existing image (of the u
 Information regarding the parameters included in PyChroma can be found towards the bottom of this README.
 
 ## Installation
+Users must install the following Python software to use PyChroma:
+
+```powershell
+pip install pillow numpy scipy
+```
+
 Install directly from this GitHub repository in the Python terminal:
 
 ```python

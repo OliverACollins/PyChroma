@@ -12,6 +12,9 @@ description = "A Python package enabling users to transform existing images into
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "pillow",
+    "numpy",
+    "scipy",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
